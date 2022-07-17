@@ -57,8 +57,8 @@ class LinAlgError(Exception):
 
     Examples
     --------
-    >>> from numpy import linalg as LA
-    >>> LA.inv(np.zeros((2,2)))
+    >>> from numpy.linalg import inv
+    >>> inv(np.zeros((2,2)))
     Traceback (most recent call last):
       File "<stdin>", line 1, in <module>
       File "...linalg.py", line 350,
@@ -1082,20 +1082,20 @@ def eigvals(a):
     if `Q` is orthogonal, then ``Q * A * Q.T`` has the same eigenvalues as
     ``A``:
 
-    >>> from numpy import linalg as LA
+    >>> from numpy.linalg import eigvals, norm
     >>> x = np.random.random()
     >>> Q = np.array([[np.cos(x), -np.sin(x)], [np.sin(x), np.cos(x)]])
-    >>> LA.norm(Q[0, :]), LA.norm(Q[1, :]), np.dot(Q[0, :],Q[1, :])
+    >>> norm(Q[0, :]), norm(Q[1, :]), np.dot(Q[0, :],Q[1, :])
     (1.0, 1.0, 0.0)
 
     Now multiply a diagonal matrix by ``Q`` on one side and by ``Q.T`` on the
     other:
 
     >>> D = np.diag((-1,1))
-    >>> LA.eigvals(D)
+    >>> eigvals(D)
     array([-1.,  1.])
     >>> A = Q @ D @ Q.T
-    >>> LA.eigvals(A)
+    >>> eigvals(A)
     array([ 1., -1.]) # random
 
     """
@@ -1176,24 +1176,24 @@ def eigvalsh(a, UPLO='L'):
 
     Examples
     --------
-    >>> from numpy import linalg as LA
+    >>> from numpy.linalg import eigvals, eigvalsh
     >>> a = np.array([[1, -2j], [2j, 5]])
-    >>> LA.eigvalsh(a)
-    array([ 0.17157288,  5.82842712]) # may vary
+    >>> eigvalsh(a)
+    array([0.17157288, 5.82842712]) # may vary
 
     >>> # demonstrate the treatment of the imaginary part of the diagonal
     >>> a = np.array([[5+2j, 9-2j], [0+2j, 2-1j]])
     >>> a
     array([[5.+2.j, 9.-2.j],
            [0.+2.j, 2.-1.j]])
-    >>> # with UPLO='L' this is numerically equivalent to using LA.eigvals()
+    >>> # with UPLO='L' this is numerically equivalent to using eigvals()
     >>> # with:
     >>> b = np.array([[5.+0.j, 0.-2.j], [0.+2.j, 2.-0.j]])
     >>> b
     array([[5.+0.j, 0.-2.j],
            [0.+2.j, 2.+0.j]])
-    >>> wa = LA.eigvalsh(a)
-    >>> wb = LA.eigvals(b)
+    >>> wa = eigvalsh(a)
+    >>> wb = eigvals(b)
     >>> wa; wb
     array([1., 6.])
     array([6.+0.j, 1.+0.j])
@@ -1313,11 +1313,11 @@ def eig(a):
 
     Examples
     --------
-    >>> from numpy import linalg as LA
+    >>> from numpy.linalg import eig
 
     (Almost) trivial example with real eigenvalues and eigenvectors.
 
-    >>> w, v = LA.eig(np.diag((1, 2, 3)))
+    >>> w, v = eig(np.diag((1, 2, 3)))
     >>> w; v
     array([1., 2., 3.])
     array([[1., 0., 0.],
@@ -1327,7 +1327,7 @@ def eig(a):
     Real matrix possessing complex eigenvalues and eigenvectors; note that the
     eigenvalues are complex conjugates of each other.
 
-    >>> w, v = LA.eig(np.array([[1, -1], [1, 1]]))
+    >>> w, v = eig(np.array([[1, -1], [1, 1]]))
     >>> w; v
     array([1.+1.j, 1.-1.j])
     array([[0.70710678+0.j        , 0.70710678-0.j        ],
@@ -1337,7 +1337,7 @@ def eig(a):
     eigenvectors); note that ``a.conj().T == a``, i.e., `a` is Hermitian.
 
     >>> a = np.array([[1, 1j], [-1j, 1]])
-    >>> w, v = LA.eig(a)
+    >>> w, v = eig(a)
     >>> w; v
     array([2.+0.j, 0.+0.j])
     array([[ 0.        +0.70710678j,  0.70710678+0.j        ], # may vary
@@ -1347,7 +1347,7 @@ def eig(a):
 
     >>> a = np.array([[1 + 1e-9, 0], [0, 1 - 1e-9]])
     >>> # Theor. eigenvalues are 1 +/- 1e-9
-    >>> w, v = LA.eig(a)
+    >>> w, v = eig(a)
     >>> w - 1; v
     array([ 1.00000008e-09, -9.99999972e-10])
     array([[1., 0.],
@@ -1455,12 +1455,12 @@ def eigh(a, UPLO='L'):
 
     Examples
     --------
-    >>> from numpy import linalg as LA
+    >>> from numpy.linalg import eig, eigh
     >>> a = np.array([[1, -2j], [2j, 5]])
     >>> a
     array([[ 1.+0.j, -0.-2.j],
            [ 0.+2.j,  5.+0.j]])
-    >>> w, v = LA.eigh(a)
+    >>> w, v = eigh(a)
     >>> w; v
     array([0.17157288, 5.82842712])
     array([[-0.92387953+0.j        , -0.38268343+0.j        ], # may vary
@@ -1475,7 +1475,7 @@ def eigh(a, UPLO='L'):
     >>> A
     matrix([[ 1.+0.j, -0.-2.j],
             [ 0.+2.j,  5.+0.j]])
-    >>> w, v = LA.eigh(A)
+    >>> w, v = eigh(A)
     >>> w; v
     array([0.17157288, 5.82842712])
     matrix([[-0.92387953+0.j        , -0.38268343+0.j        ], # may vary
@@ -1486,13 +1486,13 @@ def eigh(a, UPLO='L'):
     >>> a
     array([[5.+2.j, 9.-2.j],
            [0.+2.j, 2.-1.j]])
-    >>> # with UPLO='L' this is numerically equivalent to using LA.eig() with:
+    >>> # with UPLO='L' this is numerically equivalent to using eig() with:
     >>> b = np.array([[5.+0.j, 0.-2.j], [0.+2.j, 2.-0.j]])
     >>> b
     array([[5.+0.j, 0.-2.j],
            [0.+2.j, 2.+0.j]])
-    >>> wa, va = LA.eigh(a)
-    >>> wb, vb = LA.eig(b)
+    >>> wa, va = eigh(a)
+    >>> wb, vb = eig(b)
     >>> wa; wb
     array([1., 6.])
     array([6.+0.j, 1.+0.j])
@@ -1785,29 +1785,29 @@ def cond(x, p=None):
 
     Examples
     --------
-    >>> from numpy import linalg as LA
+    >>> from numpy.linalg import cond, inv, svd
     >>> a = np.array([[1, 0, -1], [0, 1, 0], [1, 0, 1]])
     >>> a
     array([[ 1,  0, -1],
            [ 0,  1,  0],
            [ 1,  0,  1]])
-    >>> LA.cond(a)
+    >>> cond(a)
     1.4142135623730951
-    >>> LA.cond(a, 'fro')
+    >>> cond(a, 'fro')
     3.1622776601683795
-    >>> LA.cond(a, np.inf)
+    >>> cond(a, np.inf)
     2.0
-    >>> LA.cond(a, -np.inf)
+    >>> cond(a, -np.inf)
     1.0
-    >>> LA.cond(a, 1)
+    >>> cond(a, 1)
     2.0
-    >>> LA.cond(a, -1)
+    >>> cond(a, -1)
     1.0
-    >>> LA.cond(a, 2)
+    >>> cond(a, 2)
     1.4142135623730951
-    >>> LA.cond(a, -2)
+    >>> cond(a, -2)
     0.70710678118654746 # may vary
-    >>> min(LA.svd(a, compute_uv=False))*min(LA.svd(LA.inv(a), compute_uv=False))
+    >>> min(svd(a, compute_uv=False))*min(svd(inv(a), compute_uv=False))
     0.70710678118654746 # may vary
 
     """
@@ -2525,7 +2525,7 @@ def norm(x, ord=None, axis=None, keepdims=False):
 
     Examples
     --------
-    >>> from numpy import linalg as LA
+    >>> from numpy.linalg import norm
     >>> a = np.arange(9) - 4
     >>> a
     array([-4, -3, -2, -1,  0,  1,  2,  3,  4])
@@ -2535,60 +2535,62 @@ def norm(x, ord=None, axis=None, keepdims=False):
            [-1,  0,  1],
            [ 2,  3,  4]])
 
-    >>> LA.norm(a)
+    >>> norm(a)
     7.745966692414834
-    >>> LA.norm(b)
+    >>> norm(b)
     7.745966692414834
-    >>> LA.norm(b, 'fro')
+    >>> norm(b, 'fro')
     7.745966692414834
-    >>> LA.norm(a, np.inf)
+
+    >>> norm(a, np.inf)
     4.0
-    >>> LA.norm(b, np.inf)
+    >>> norm(b, np.inf)
     9.0
-    >>> LA.norm(a, -np.inf)
+    >>> norm(a, -np.inf)
     0.0
-    >>> LA.norm(b, -np.inf)
+    >>> norm(b, -np.inf)
     2.0
 
-    >>> LA.norm(a, 1)
+    >>> norm(a, 1)
     20.0
-    >>> LA.norm(b, 1)
+    >>> norm(b, 1)
     7.0
-    >>> LA.norm(a, -1)
+    >>> norm(a, -1)
     -4.6566128774142013e-010
-    >>> LA.norm(b, -1)
+    >>> norm(b, -1)
     6.0
-    >>> LA.norm(a, 2)
-    7.745966692414834
-    >>> LA.norm(b, 2)
-    7.3484692283495345
 
-    >>> LA.norm(a, -2)
+    >>> norm(a, 2)
+    7.745966692414834
+    >>> norm(b, 2)
+    7.3484692283495345
+    >>> norm(a, -2)
     0.0
-    >>> LA.norm(b, -2)
+    >>> norm(b, -2)
     1.8570331885190563e-016 # may vary
-    >>> LA.norm(a, 3)
+
+    >>> norm(a, 3)
     5.8480354764257312 # may vary
-    >>> LA.norm(a, -3)
+    >>> norm(a, -3)
     0.0
 
     Using the `axis` argument to compute vector norms:
 
     >>> c = np.array([[ 1, 2, 3],
     ...               [-1, 1, 4]])
-    >>> LA.norm(c, axis=0)
+    >>> norm(c, axis=0)
     array([1.41421356, 2.23606798, 5.        ])
-    >>> LA.norm(c, axis=1)
+    >>> norm(c, axis=1)
     array([3.74165739, 4.24264069])
-    >>> LA.norm(c, ord=1, axis=1)
+    >>> norm(c, ord=1, axis=1)
     array([6., 6.])
 
     Using the `axis` argument to compute matrix norms:
 
     >>> m = np.arange(8).reshape(2,2,2)
-    >>> LA.norm(m, axis=(1,2))
+    >>> norm(m, axis=(1,2))
     array([ 3.74165739, 11.22497216])
-    >>> LA.norm(m[0, :, :]), LA.norm(m[1, :, :])
+    >>> norm(m[0, :, :]), norm(m[1, :, :])
     (3.7416573867739413, 11.224972160321824)
 
     """
