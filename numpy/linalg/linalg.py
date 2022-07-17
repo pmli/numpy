@@ -829,7 +829,7 @@ def _qr_dispatcher(a, mode=None):
 @array_function_dispatch(_qr_dispatcher)
 def qr(a, mode='reduced'):
     """
-    Compute the qr factorization of a matrix.
+    Compute the QR factorization of a matrix.
 
     Factor the matrix `a` as *qr*, where `q` is orthonormal and `r` is
     upper-triangular.
@@ -841,40 +841,39 @@ def qr(a, mode='reduced'):
     mode : {'reduced', 'complete', 'r', 'raw'}, optional
         If K = min(M, N), then
 
-        * 'reduced'  : returns q, r with dimensions
-                       (..., M, K), (..., K, N) (default)
-        * 'complete' : returns q, r with dimensions (..., M, M), (..., M, N)
-        * 'r'        : returns r only with dimensions (..., K, N)
-        * 'raw'      : returns h, tau with dimensions (..., N, M), (..., K,)
+        * 'reduced': returns `q`, `r` with dimensions (..., M, K), (..., K, N)
+          (default)
+        * 'complete': returns `q`, `r` with dimensions (..., M, M), (..., M, N)
+        * 'r': returns `r` only with dimensions (..., K, N)
+        * 'raw': returns `h`, `tau` with dimensions (..., N, M), (..., K,)
 
-        The options 'reduced', 'complete, and 'raw' are new in numpy 1.8,
+        The options 'reduced', 'complete', and 'raw' are new in NumPy 1.8,
         see the notes for more information. The default is 'reduced', and to
-        maintain backward compatibility with earlier versions of numpy both
-        it and the old default 'full' can be omitted. Note that array h
+        maintain backward compatibility with earlier versions of NumPy both
+        it and the old default 'full' can be omitted. Note that array `h`
         returned in 'raw' mode is transposed for calling Fortran. The
         'economic' mode is deprecated.  The modes 'full' and 'economic' may
         be passed using only the first letter for backwards compatibility,
         but all others must be spelled out. See the Notes for more
         explanation.
 
-
     Returns
     -------
     q : ndarray of float or complex, optional
         A matrix with orthonormal columns. When mode = 'complete' the
         result is an orthogonal/unitary matrix depending on whether or not
-        a is real/complex. The determinant may be either +/- 1 in that
-        case. In case the number of dimensions in the input array is
-        greater than 2 then a stack of the matrices with above properties
+        `a` is real/complex. The determinant must be of absolute value 1 in
+        that case. In case the number of dimensions in the input array is
+        greater than two, a stack of the matrices with above properties
         is returned.
     r : ndarray of float or complex, optional
         The upper-triangular matrix or a stack of upper-triangular
         matrices if the number of dimensions in the input array is greater
-        than 2.
+        than two.
     (h, tau) : ndarrays of np.double or np.cdouble, optional
-        The array h contains the Householder reflectors that generate q
-        along with r. The tau array contains scaling factors for the
-        reflectors. In the deprecated  'economic' mode only h is returned.
+        The array `h` contains the Householder reflectors that generate `q`
+        along with `r`. The `tau` array contains scaling factors for the
+        reflectors. In the deprecated  'economic' mode only `h` is returned.
 
     Raises
     ------
@@ -891,7 +890,7 @@ def qr(a, mode='reduced'):
     This is an interface to the LAPACK routines ``dgeqrf``, ``zgeqrf``,
     ``dorgqr``, and ``zungqr``.
 
-    For more information on the qr factorization, see for example:
+    For more information on the QR factorization, see for example:
     https://en.wikipedia.org/wiki/QR_factorization
 
     Subclasses of `ndarray` are preserved except for the 'raw' mode. So if
@@ -903,10 +902,10 @@ def qr(a, mode='reduced'):
     'full' was the previous default and 'reduced' is the new default,
     backward compatibility can be maintained by letting `mode` default.
     The 'raw' option was added so that LAPACK routines that can multiply
-    arrays by q using the Householder reflectors can be used. Note that in
+    arrays by `q` using the Householder reflectors can be used. Note that in
     this case the returned arrays are of type np.double or np.cdouble and
-    the h array is transposed to be FORTRAN compatible.  No routines using
-    the 'raw' return are currently exposed by numpy, but some are available
+    the `h` array is transposed to be FORTRAN compatible.  No routines using
+    the 'raw' return are currently exposed by NumPy, but some are available
     in lapack_lite and just await the necessary work.
 
     Examples
@@ -918,7 +917,7 @@ def qr(a, mode='reduced'):
     >>> r2 = np.linalg.qr(a, mode='r')
     >>> np.allclose(r, r2)  # mode='r' returns the same r as mode='full'
     True
-    >>> a = np.random.normal(size=(3, 2, 2)) # Stack of 2 x 2 matrices as input
+    >>> a = np.random.randn(3, 2, 2) # Stack of 2 x 2 matrices as input
     >>> q, r = np.linalg.qr(a)
     >>> q.shape
     (3, 2, 2)
@@ -927,7 +926,7 @@ def qr(a, mode='reduced'):
     >>> np.allclose(a, np.matmul(q, r))
     True
 
-    Example illustrating a common use of `qr`: solving of least squares
+    Example illustrating a common use of `qr`: solving of least-squares
     problems
 
     What are the least-squares-best `m` and `y0` in ``y = y0 + mx`` for
@@ -940,7 +939,7 @@ def qr(a, mode='reduced'):
       b = array([[1], [0], [2], [1]])
 
     If A = qr such that q is orthonormal (which is always possible via
-    Gram-Schmidt), then ``x = inv(r) * (q.T) * b``.  (In numpy practice,
+    Gram-Schmidt), then ``x = inv(r) * (q.T) * b``.  (In NumPy practice,
     however, we simply use `lstsq`.)
 
     >>> A = np.array([[0, 1], [1, 1], [1, 1], [2, 1]])
@@ -951,8 +950,7 @@ def qr(a, mode='reduced'):
            [2, 1]])
     >>> b = np.array([1, 2, 2, 3])
     >>> q, r = np.linalg.qr(A)
-    >>> p = np.dot(q.T, b)
-    >>> np.dot(np.linalg.inv(r), p)
+    >>> np.linalg.solve(r, q.T @ b)
     array([  1.,   1.])
 
     """
