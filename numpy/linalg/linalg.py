@@ -1963,7 +1963,7 @@ def pinv(a, rcond=1e-15, hermitian=False):
     Compute the (Moore-Penrose) pseudo-inverse of a matrix.
 
     Calculate the generalized inverse of a matrix using its
-    singular-value decomposition (SVD) and including all
+    singular value decomposition (SVD) and including all
     *large* singular values.
 
     .. versionchanged:: 1.14
@@ -2001,6 +2001,7 @@ def pinv(a, rcond=1e-15, hermitian=False):
     scipy.linalg.pinv : Similar function in SciPy.
     scipy.linalg.pinvh : Compute the (Moore-Penrose) pseudo-inverse of a
                          Hermitian matrix.
+    lstsq : Solve a least-squares problem.
 
     Notes
     -----
@@ -2013,10 +2014,13 @@ def pinv(a, rcond=1e-15, hermitian=False):
     value decomposition of A, then
     :math:`A^+ = Q_2 \\Sigma^+ Q_1^T`, where :math:`Q_{1,2}` are
     orthogonal matrices, :math:`\\Sigma` is a diagonal matrix consisting
-    of A's so-called singular values, (followed, typically, by
+    of A's so-called singular values (followed, typically, by
     zeros), and then :math:`\\Sigma^+` is simply the diagonal matrix
     consisting of the reciprocals of A's singular values
     (again, followed by zeros). [1]_
+
+    If the matrix pseudo-inverse itself is not necessary but only a solution to
+    a least-squares problem, use `numpy.linalg.lstsq`.
 
     References
     ----------
