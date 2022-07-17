@@ -508,8 +508,8 @@ def inv(a):
     """
     Compute the (multiplicative) inverse of a matrix.
 
-    Given a square matrix `a`, return the matrix `ainv` satisfying
-    ``dot(a, ainv) = dot(ainv, a) = eye(a.shape[0])``.
+    Given a square invertible matrix `a`, numerically computes a matrix `ainv`
+    approximately satisfying ``dot(a, ainv) = dot(ainv, a) = eye(a.shape[0])``.
 
     Parameters
     ----------
@@ -524,11 +524,12 @@ def inv(a):
     Raises
     ------
     LinAlgError
-        If `a` is not square or inversion fails.
+        If `a` is not square or if non-invertibility is detected.
 
     See Also
     --------
     scipy.linalg.inv : Similar function in SciPy.
+    solve : Solve a linear system of equations.
 
     Notes
     -----
@@ -537,6 +538,9 @@ def inv(a):
 
     Broadcasting rules apply, see the `numpy.linalg` documentation for
     details.
+
+    If the matrix inverse itself is not necessary but only a solution to a
+    linear system of equations, use `numpy.linalg.solve`.
 
     Examples
     --------
@@ -548,7 +552,7 @@ def inv(a):
     >>> np.allclose(np.dot(ainv, a), np.eye(2))
     True
 
-    If a is a matrix object, then the return value is a matrix as well:
+    If `a` is a matrix object, then the return value is a matrix as well:
 
     >>> ainv = inv(np.matrix(a))
     >>> ainv
