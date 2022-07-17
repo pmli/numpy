@@ -401,7 +401,7 @@ def solve(a, b):
 
     Check that the solution is correct:
 
-    >>> np.allclose(np.dot(a, x), b)
+    >>> np.allclose(a @ x, b)
     True
 
     """
@@ -547,9 +547,9 @@ def inv(a):
     >>> from numpy.linalg import inv
     >>> a = np.array([[1., 2.], [3., 4.]])
     >>> ainv = inv(a)
-    >>> np.allclose(np.dot(a, ainv), np.eye(2))
+    >>> np.allclose(a @ ainv, np.eye(2))
     True
-    >>> np.allclose(np.dot(ainv, a), np.eye(2))
+    >>> np.allclose(ainv @ a, np.eye(2))
     True
 
     If `a` is a matrix object, then the return value is a matrix as well:
@@ -796,7 +796,7 @@ def cholesky(a):
     >>> L
     array([[1.+0.j, 0.+0.j],
            [0.+2.j, 1.+0.j]])
-    >>> np.dot(L, L.T.conj()) # verify that L * L.H = A
+    >>> L @ L.T.conj() # verify that L * L.H = A
     array([[1.+0.j, 0.-2.j],
            [0.+2.j, 5.+0.j]])
     >>> A = [[1,-2j],[2j,5]] # what happens if A is only array_like?
@@ -912,7 +912,7 @@ def qr(a, mode='reduced'):
     --------
     >>> a = np.random.randn(9, 6)
     >>> q, r = np.linalg.qr(a)
-    >>> np.allclose(a, np.dot(q, r))  # a does equal qr
+    >>> np.allclose(a, q @ r)  # a does equal qr
     True
     >>> r2 = np.linalg.qr(a, mode='r')
     >>> np.allclose(r, r2)  # mode='r' returns the same r as mode='full'
@@ -923,7 +923,7 @@ def qr(a, mode='reduced'):
     (3, 2, 2)
     >>> r.shape
     (3, 2, 2)
-    >>> np.allclose(a, np.matmul(q, r))
+    >>> np.allclose(a, q @ r)
     True
 
     Example illustrating a common use of `qr`: solving of least-squares
@@ -1094,8 +1094,7 @@ def eigvals(a):
     >>> D = np.diag((-1,1))
     >>> LA.eigvals(D)
     array([-1.,  1.])
-    >>> A = np.dot(Q, D)
-    >>> A = np.dot(A, Q.T)
+    >>> A = Q @ D @ Q.T
     >>> LA.eigvals(A)
     array([ 1., -1.]) # random
 
@@ -1467,9 +1466,9 @@ def eigh(a, UPLO='L'):
     array([[-0.92387953+0.j        , -0.38268343+0.j        ], # may vary
            [ 0.        +0.38268343j,  0.        -0.92387953j]])
 
-    >>> np.dot(a, v[:, 0]) - w[0] * v[:, 0] # verify 1st eigenval/vec pair
+    >>> a @ v[:, 0] - w[0] * v[:, 0] # verify 1st eigenval/vec pair
     array([5.55111512e-17+0.0000000e+00j, 0.00000000e+00+1.2490009e-16j])
-    >>> np.dot(a, v[:, 1]) - w[1] * v[:, 1] # verify 2nd eigenval/vec pair
+    >>> a @ v[:, 1] - w[1] * v[:, 1] # verify 2nd eigenval/vec pair
     array([0.+0.j, 0.+0.j])
 
     >>> A = np.matrix(a) # what happens if input is a matrix object
@@ -1630,11 +1629,11 @@ def svd(a, full_matrices=True, compute_uv=True, hermitian=False):
     >>> u, s, vh = np.linalg.svd(a, full_matrices=True)
     >>> u.shape, s.shape, vh.shape
     ((9, 9), (6,), (6, 6))
-    >>> np.allclose(a, np.dot(u[:, :6] * s, vh))
+    >>> np.allclose(a, (u[:, :6] * s) @ vh)
     True
     >>> smat = np.zeros((9, 6), dtype=complex)
     >>> smat[:6, :6] = np.diag(s)
-    >>> np.allclose(a, np.dot(u, np.dot(smat, vh)))
+    >>> np.allclose(a, u @ smat @ vh)
     True
 
     Reconstruction based on reduced SVD, 2D case:
@@ -1642,10 +1641,10 @@ def svd(a, full_matrices=True, compute_uv=True, hermitian=False):
     >>> u, s, vh = np.linalg.svd(a, full_matrices=False)
     >>> u.shape, s.shape, vh.shape
     ((9, 6), (6,), (6, 6))
-    >>> np.allclose(a, np.dot(u * s, vh))
+    >>> np.allclose(a, (u * s) @ vh)
     True
     >>> smat = np.diag(s)
-    >>> np.allclose(a, np.dot(u, np.dot(smat, vh)))
+    >>> np.allclose(a, u @ smat @ vh)
     True
 
     Reconstruction based on full SVD, 4D case:
@@ -1653,9 +1652,9 @@ def svd(a, full_matrices=True, compute_uv=True, hermitian=False):
     >>> u, s, vh = np.linalg.svd(b, full_matrices=True)
     >>> u.shape, s.shape, vh.shape
     ((2, 7, 8, 8), (2, 7, 3), (2, 7, 3, 3))
-    >>> np.allclose(b, np.matmul(u[..., :3] * s[..., None, :], vh))
+    >>> np.allclose(b, (u[..., :3] * s[..., None, :]) @ vh)
     True
-    >>> np.allclose(b, np.matmul(u[..., :3], s[..., None] * vh))
+    >>> np.allclose(b, u[..., :3] @ (s[..., None] * vh))
     True
 
     Reconstruction based on reduced SVD, 4D case:
@@ -1663,9 +1662,9 @@ def svd(a, full_matrices=True, compute_uv=True, hermitian=False):
     >>> u, s, vh = np.linalg.svd(b, full_matrices=False)
     >>> u.shape, s.shape, vh.shape
     ((2, 7, 8, 3), (2, 7, 3), (2, 7, 3, 3))
-    >>> np.allclose(b, np.matmul(u * s[..., None, :], vh))
+    >>> np.allclose(b, (u * s[..., None, :]) @ vh)
     True
-    >>> np.allclose(b, np.matmul(u, s[..., None] * vh))
+    >>> np.allclose(b, u @ (s[..., None] * vh))
     True
 
     """
@@ -2043,9 +2042,9 @@ def pinv(a, rcond=1e-15, hermitian=False):
 
     >>> a = np.random.randn(9, 6)
     >>> B = np.linalg.pinv(a)
-    >>> np.allclose(a, np.dot(a, np.dot(B, a)))
+    >>> np.allclose(a, a @ B @ a)
     True
-    >>> np.allclose(B, np.dot(B, np.dot(a, B)))
+    >>> np.allclose(B, B @ a @ B)
     True
 
     Comparison of `numpy.linalg.pinv` and `numpy.linalg.lstsq` for solving a
