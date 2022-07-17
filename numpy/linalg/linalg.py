@@ -805,8 +805,8 @@ def cholesky(a):
            [0.+2.j, 1.+0.j]])
     >>> # But a matrix object is returned if A is a matrix object
     >>> np.linalg.cholesky(np.matrix(A))
-    matrix([[ 1.+0.j,  0.+0.j],
-            [ 0.+2.j,  1.+0.j]])
+    matrix([[1.+0.j, 0.+0.j],
+            [0.+2.j, 1.+0.j]])
 
     """
     extobj = get_linalg_error_extobj(_raise_linalgerror_nonposdef)
@@ -952,7 +952,7 @@ def qr(a, mode='reduced'):
     >>> b = np.array([1, 2, 2, 3])
     >>> q, r = np.linalg.qr(A)
     >>> np.linalg.solve(r, q.T @ b)
-    array([  1.,   1.])
+    array([1., 1.])
 
     """
     if mode not in ('reduced', 'complete', 'r', 'raw'):
@@ -2144,7 +2144,7 @@ def slogdet(a):
     >>> a = np.array([[1, 2], [3, 4]])
     >>> (sign, logdet) = np.linalg.slogdet(a)
     >>> (sign, logdet)
-    (-1, 0.69314718055994529) # may vary
+    (-1.0, 0.69314718055994529) # may vary
     >>> sign * np.exp(logdet)
     -2.0
 
@@ -2155,7 +2155,7 @@ def slogdet(a):
     (3, 2, 2)
     >>> sign, logdet = np.linalg.slogdet(a)
     >>> (sign, logdet)
-    (array([-1., -1., -1.]), array([ 0.69314718,  1.09861229,  2.07944154]))
+    (array([-1., -1., -1.]), array([0.69314718, 1.09861229, 2.07944154]))
     >>> sign * np.exp(logdet)
     array([-2., -3., -8.])
 
@@ -2164,7 +2164,7 @@ def slogdet(a):
     >>> np.linalg.det(np.eye(500) * 0.1)
     0.0
     >>> np.linalg.slogdet(np.eye(500) * 0.1)
-    (1, -1151.2925464970228)
+    (1.0, -1151.2925464970228)
 
     """
     a = asarray(a)
@@ -2323,10 +2323,10 @@ def lstsq(a, b, rcond="warn"):
 
     >>> A = np.vstack([x, np.ones(len(x))]).T
     >>> A
-    array([[ 0.,  1.],
-           [ 1.,  1.],
-           [ 2.,  1.],
-           [ 3.,  1.]])
+    array([[0., 1.],
+           [1., 1.],
+           [2., 1.],
+           [3., 1.]])
 
     >>> m, c = np.linalg.lstsq(A, y, rcond=None)[0]
     >>> m, c
@@ -2528,7 +2528,7 @@ def norm(x, ord=None, axis=None, keepdims=False):
     >>> from numpy import linalg as LA
     >>> a = np.arange(9) - 4
     >>> a
-    array([-4, -3, -2, ...,  2,  3,  4])
+    array([-4, -3, -2, -1,  0,  1,  2,  3,  4])
     >>> b = a.reshape((3, 3))
     >>> b
     array([[-4, -3, -2],
@@ -2577,17 +2577,17 @@ def norm(x, ord=None, axis=None, keepdims=False):
     >>> c = np.array([[ 1, 2, 3],
     ...               [-1, 1, 4]])
     >>> LA.norm(c, axis=0)
-    array([ 1.41421356,  2.23606798,  5.        ])
+    array([1.41421356, 2.23606798, 5.        ])
     >>> LA.norm(c, axis=1)
-    array([ 3.74165739,  4.24264069])
+    array([3.74165739, 4.24264069])
     >>> LA.norm(c, ord=1, axis=1)
-    array([ 6.,  6.])
+    array([6., 6.])
 
     Using the `axis` argument to compute matrix norms:
 
     >>> m = np.arange(8).reshape(2,2,2)
     >>> LA.norm(m, axis=(1,2))
-    array([  3.74165739,  11.22497216])
+    array([ 3.74165739, 11.22497216])
     >>> LA.norm(m[0, :, :]), LA.norm(m[1, :, :])
     (3.7416573867739413, 11.224972160321824)
 
