@@ -390,7 +390,8 @@ def solve(a, b):
 
     Examples
     --------
-    Solve the system of equations ``x0 + 2 * x1 = 1`` and ``3 * x0 + 5 * x1 = 2``:
+    Solve the system of equations ``x0 + 2 * x1 = 1`` and
+    ``3 * x0 + 5 * x1 = 2``:
 
     >>> a = np.array([[1, 2], [3, 5]])
     >>> b = np.array([1, 2])
