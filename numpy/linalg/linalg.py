@@ -930,13 +930,14 @@ def qr(a, mode='reduced'):
     problems
 
     What are the least-squares-best `m` and `y0` in ``y = y0 + mx`` for
-    the following data: {(0,1), (1,0), (1,2), (2,1)}. (Graph the points
-    and you'll see that it should be y0 = 0, m = 1.)  The answer is provided
-    by solving the over-determined matrix equation ``Ax = b``, where::
+    the following data: {(0,1), (1,2), (1,2), (2,3)}? (Graph the points
+    and you'll see that it should be `y0 = 1`, `m = 1`.)
+    The answer is provided by solving the over-determined matrix equation
+    ``Ax = b``, where::
 
       A = array([[0, 1], [1, 1], [1, 1], [2, 1]])
       x = array([[y0], [m]])
-      b = array([[1], [0], [2], [1]])
+      b = array([[1], [2], [2], [3]])
 
     If A = qr such that q is orthonormal (which is always possible via
     Gram-Schmidt), then ``x = inv(r) * (q.T) * b``.  (In NumPy practice,
