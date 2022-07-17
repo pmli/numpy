@@ -568,6 +568,28 @@ def inv(a):
            [[-1.25,  0.75],
             [ 0.75, -0.25]]])
 
+    Comparison of `numpy.linalg.inv` and `numpy.linalg.solve` for solving a
+    system of linear equations:
+
+    >>> rng = np.random.default_rng(0)
+    >>> n = 100
+    >>> s = np.logspace(0, -10, n)
+    >>> u = np.linalg.qr(rng.standard_normal((n, n)))[0]
+    >>> v = np.linalg.qr(rng.standard_normal((n, n)))[0]
+    >>> a = (u * s) @ v.T
+    >>> x_true = rng.standard_normal(n)
+    >>> b = a @ x_true
+    >>> x_inv = inv(a) @ b
+    >>> x_solve = np.linalg.solve(a, b)
+    >>> np.linalg.norm(a @ x_inv - b) / np.linalg.norm(b)
+    7.666666218674124e-08 # may wary
+    >>> np.linalg.norm(a @ x_solve - b) / np.linalg.norm(b)
+    4.31451644396198e-16 # may wary
+    >>> np.linalg.norm(x_true - x_inv) / np.linalg.norm(x_true)
+    1.7195815869294435e-06 # may wary
+    >>> np.linalg.norm(x_true - x_solve) / np.linalg.norm(x_true)
+    5.545962872802138e-08 # may wary
+
     """
     a, wrap = _makearray(a)
     _assert_stacked_2d(a)
