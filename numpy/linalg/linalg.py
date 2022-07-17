@@ -322,29 +322,32 @@ def solve(a, b):
     """
     Solve a linear matrix equation, or system of linear scalar equations.
 
-    Computes the "exact" solution, `x`, of the well-determined, i.e., full
-    rank, linear matrix equation `ax = b`.
+    Given a square invertible matrix `a`, numerically computes a solution `x`
+    approximately satisfying the linear matrix equation `a x = b`.
 
     Parameters
     ----------
     a : (..., M, M) array_like
         Coefficient matrix.
     b : {(..., M,), (..., M, K)}, array_like
-        Ordinate or "dependent variable" values.
+        Right-hand side, ordinate, or "dependent variable" values.
 
     Returns
     -------
     x : {(..., M,), (..., M, K)} ndarray
-        Solution to the system a x = b.  Returned shape is identical to `b`.
+        Solution to the system `a x = b`.  Returned shape is identical to `b`.
 
     Raises
     ------
     LinAlgError
-        If `a` is singular or not square.
+        If `a` is not square or non-invertibility is detected.
 
     See Also
     --------
     scipy.linalg.solve : Similar function in SciPy.
+    lstsq : Solve a least-squares problem.
+    inv : Compute the matrix inverse.
+    cond : Compute matrix condition number.
 
     Notes
     -----
@@ -356,10 +359,29 @@ def solve(a, b):
 
     The solutions are computed using LAPACK routine ``_gesv``.
 
-    `a` must be square and of full-rank, i.e., all rows (or, equivalently,
-    columns) must be linearly independent; if either is not true, use
-    `lstsq` for the least-squares best "solution" of the
-    system/equation.
+    The matrix `a` must be square and "numerically invertible".
+    In exact arithmetic, it is enough that `a` is of full rank, i.e., all rows
+    (or, equivalently, columns) is linearly independent.
+    (If you are interested in exact arithmetic, try SymPy.)
+    Due to the use of finite-precision arithmetic and implementation details
+    (LU decomposition with partial pivoting),
+    the solution will not be exact, even if `a` consists of integers.
+    The matrix should also be sufficiently well-conditioned, i.e., not have a
+    too large condition number (see `cond`).
+
+    For a square `a`, the `LinAlgError` is raised when there is a zero
+    component in the diagonal of the U factor of the numerically computed LU
+    decomposition, which is not necessarily equivalent to the matrix being
+    singular.
+    If this is of concern, a better warning can be provided by
+    ``scipy.linalg.solve`` that can raise a warning when it detects an
+    ill-condition matrix (since SciPy 0.19).
+
+    A common example of an ill-conditioned system are normal equations
+    `a.T a x = a.T b` arising from solving a least-squares problem.
+
+    if either is not true, use `lstsq` for the least-squares best "solution" of
+    the system/equation.
 
     References
     ----------
