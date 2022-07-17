@@ -2761,6 +2761,8 @@ def multi_dot(arrays, *, out=None):
     >>> _ = np.dot(np.dot(np.dot(A, B), C), D)
     >>> # or
     >>> _ = A.dot(B).dot(C).dot(D)
+    >>> # or
+    >>> _ = A @ B @ C @ D
 
     Notes
     -----
