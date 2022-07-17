@@ -2443,8 +2443,8 @@ def norm(x, ord=None, axis=None, keepdims=False):
         Input array.  If `axis` is None, `x` must be 1-D or 2-D, unless `ord`
         is None. If both `axis` and `ord` are None, the 2-norm of
         ``x.ravel`` will be returned.
-    ord : {non-zero int, inf, -inf, 'fro', 'nuc'}, optional
-        Order of the norm (see table under ``Notes``). inf means numpy's
+    ord : {None, int, float, inf, -inf, 'fro', 'nuc'}, optional
+        Order of the norm (see table under ``Notes``). inf means NumPy's
         `inf` object. The default is None.
     axis : {None, int, 2-tuple of ints}, optional.
         If `axis` is an integer, it specifies the axis of `x` along which to
@@ -2493,17 +2493,22 @@ def norm(x, ord=None, axis=None, keepdims=False):
     -1     min(sum(abs(x), axis=0))      as below
     2      2-norm (largest sing. value)  as below
     -2     smallest singular value       as below
-    other  --                            sum(abs(x)**ord)**(1./ord)
+    other  --                            sum(abs(x)**ord)**(1/ord)
     =====  ============================  ==========================
 
     The Frobenius norm is given by [1]_:
 
-        :math:`||A||_F = [\\sum_{i,j} abs(a_{i,j})^2]^{1/2}`
+    .. math::
 
+        \\rVert A \\lVert_F
+        = \\left(\\sum_{i,j} \\lvert a_{i,j} \\rvert^2\\right)^{1/2}.
+
+    It is also equal to the square root of the sum of squared singular values.
     The nuclear norm is the sum of the singular values.
 
     Both the Frobenius and nuclear norm orders are only defined for
-    matrices and raise a ValueError when ``x.ndim != 2``.
+    matrices and raise a ValueError when ``x.ndim < 2`` or ``len(axis) != 2``
+    and ``x.ndim > 2``.
 
     References
     ----------
