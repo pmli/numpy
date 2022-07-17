@@ -1742,7 +1742,7 @@ def cond(x, p=None):
         =====  ============================
         p      norm for matrices
         =====  ============================
-        None   2-norm, computed directly using the ``SVD``
+        None   2-norm, computed directly using the SVD
         'fro'  Frobenius norm
         inf    max(sum(abs(x), axis=1))
         -inf   min(sum(abs(x), axis=1))
@@ -1762,7 +1762,7 @@ def cond(x, p=None):
 
     See Also
     --------
-    numpy.linalg.norm
+    numpy.linalg.norm : Matrix or vector norm.
 
     Notes
     -----
