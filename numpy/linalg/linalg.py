@@ -2039,6 +2039,28 @@ def pinv(a, rcond=1e-15, hermitian=False):
     >>> np.allclose(B, np.dot(B, np.dot(a, B)))
     True
 
+    Comparison of `numpy.linalg.pinv` and `numpy.linalg.lstsq` for solving a
+    least-squares problem:
+
+    >>> rng = np.random.default_rng(0)
+    >>> m = 500; n = 100
+    >>> s = np.logspace(0, -10, n)
+    >>> u = np.linalg.qr(rng.standard_normal((m, n)))[0]
+    >>> v = np.linalg.qr(rng.standard_normal((n, n)))[0]
+    >>> a = (u * s) @ v.T
+    >>> x_true = rng.standard_normal(n)
+    >>> b = a @ x_true
+    >>> x_pinv = np.linalg.pinv(a) @ b
+    >>> x_lstsq = np.linalg.lstsq(a, b, rcond=None)[0]
+    >>> np.linalg.norm(a @ x_pinv - b) / np.linalg.norm(b)
+    2.119751019525733e-08 # may wary
+    >>> np.linalg.norm(a @ x_lstsq - b) / np.linalg.norm(b)
+    2.0572325729744336e-15 # may wary
+    >>> np.linalg.norm(x_true - x_pinv) / np.linalg.norm(x_true)
+    1.007601794488545e-07 # may wary
+    >>> np.linalg.norm(x_true - x_lstsq) / np.linalg.norm(x_true)
+    5.107590510327067e-08 # may wary
+
     """
     a, wrap = _makearray(a)
     rcond = asarray(rcond)
