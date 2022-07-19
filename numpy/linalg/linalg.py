@@ -353,9 +353,8 @@ def solve(a, b):
     -----
 
     .. versionadded:: 1.8.0
-
-    Broadcasting rules apply, see the `numpy.linalg` documentation for
-    details.
+        Broadcasting rules apply, see the `numpy.linalg` documentation for
+        details.
 
     The solutions are computed using LAPACK routine ``_gesv``.
 
@@ -535,9 +534,8 @@ def inv(a):
     -----
 
     .. versionadded:: 1.8.0
-
-    Broadcasting rules apply, see the `numpy.linalg` documentation for
-    details.
+        Broadcasting rules apply, see the `numpy.linalg` documentation for
+        details.
 
     If the matrix inverse itself is not necessary but only a solution to a
     linear system of equations, use `numpy.linalg.solve`.
@@ -768,9 +766,8 @@ def cholesky(a):
     -----
 
     .. versionadded:: 1.8.0
-
-    Broadcasting rules apply, see the `numpy.linalg` documentation for
-    details.
+        Broadcasting rules apply, see the `numpy.linalg` documentation for
+        details.
 
     The Cholesky decomposition is often used as a fast way of solving
 
@@ -1066,9 +1063,8 @@ def eigvals(a):
     -----
 
     .. versionadded:: 1.8.0
-
-    Broadcasting rules apply, see the `numpy.linalg` documentation for
-    details.
+        Broadcasting rules apply, see the `numpy.linalg` documentation for
+        details.
 
     This is implemented using the ``_geev`` LAPACK routines which compute
     the eigenvalues and eigenvectors of general square arrays.
@@ -1168,9 +1164,8 @@ def eigvalsh(a, UPLO='L'):
     -----
 
     .. versionadded:: 1.8.0
-
-    Broadcasting rules apply, see the `numpy.linalg` documentation for
-    details.
+        Broadcasting rules apply, see the `numpy.linalg` documentation for
+        details.
 
     The eigenvalues are computed using LAPACK routines ``_syevd``, ``_heevd``.
 
@@ -1274,9 +1269,8 @@ def eig(a):
     -----
 
     .. versionadded:: 1.8.0
-
-    Broadcasting rules apply, see the `numpy.linalg` documentation for
-    details.
+        Broadcasting rules apply, see the `numpy.linalg` documentation for
+        details.
 
     This is implemented using the ``_geev`` LAPACK routines which compute
     the eigenvalues and eigenvectors of general square arrays.
@@ -1436,9 +1430,8 @@ def eigh(a, UPLO='L'):
     -----
 
     .. versionadded:: 1.8.0
-
-    Broadcasting rules apply, see the `numpy.linalg` documentation for
-    details.
+        Broadcasting rules apply, see the `numpy.linalg` documentation for
+        details.
 
     The eigenvalues/eigenvectors are computed using LAPACK routines ``_syevd``,
     ``_heevd``.
@@ -1592,7 +1585,7 @@ def svd(a, full_matrices=True, compute_uv=True, hermitian=False):
     Notes
     -----
 
-    .. versionchanged:: 1.8.0
+    .. versionadded:: 1.8.0
        Broadcasting rules apply, see the `numpy.linalg` documentation for
        details.
 
@@ -2127,14 +2120,12 @@ def slogdet(a):
     -----
 
     .. versionadded:: 1.8.0
-
-    Broadcasting rules apply, see the `numpy.linalg` documentation for
-    details.
+        Broadcasting rules apply, see the `numpy.linalg` documentation for
+        details.
 
     .. versionadded:: 1.6.0
-
-    The determinant is computed via LU factorization using the LAPACK
-    routine ``z/dgetrf``.
+        The determinant is computed via LU factorization using the LAPACK
+        routine ``z/dgetrf``.
 
 
     Examples
@@ -2204,9 +2195,8 @@ def det(a):
     -----
 
     .. versionadded:: 1.8.0
-
-    Broadcasting rules apply, see the `numpy.linalg` documentation for
-    details.
+        Broadcasting rules apply, see the `numpy.linalg` documentation for
+        details.
 
     The determinant is computed via LU factorization using the LAPACK
     routine ``z/dgetrf``.
