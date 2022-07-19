@@ -1354,6 +1354,15 @@ def eig(a):
     array([[1., 0.],
            [0., 1.]])
 
+    Non-diagonalizable matrix (`eig` does not raise an error).
+
+    >>> a = np.array([[1, 1], [0, 1]])
+    >>> w, v = eig(a)
+    >>> w; v
+    array([1., 1.])
+    array([[ 1.00000000e+00, -1.00000000e+00],
+           [ 0.00000000e+00,  2.22044605e-16]]) # may wary
+
     """
     a, wrap = _makearray(a)
     _assert_stacked_2d(a)
