@@ -1055,10 +1055,10 @@ def eigvals(a):
 
     See Also
     --------
-    eig : eigenvalues and right eigenvectors of general arrays
-    eigvalsh : eigenvalues of real symmetric or complex Hermitian
+    eig : Eigenvalues and right eigenvectors of general arrays
+    eigvalsh : Eigenvalues of real symmetric or complex Hermitian
                (conjugate symmetric) arrays.
-    eigh : eigenvalues and eigenvectors of real symmetric or complex
+    eigh : Eigenvalues and eigenvectors of real symmetric or complex
            Hermitian (conjugate symmetric) arrays.
     scipy.linalg.eigvals : Similar function in SciPy.
 
