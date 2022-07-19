@@ -1426,10 +1426,10 @@ def eigh(a, UPLO='L'):
 
     See Also
     --------
-    eigvalsh : eigenvalues of real symmetric or complex Hermitian
+    eigvalsh : Eigenvalues of real symmetric or complex Hermitian
                (conjugate symmetric) arrays.
-    eig : eigenvalues and right eigenvectors for non-symmetric arrays.
-    eigvals : eigenvalues of non-symmetric arrays.
+    eig : Eigenvalues and right eigenvectors for non-symmetric arrays.
+    eigvals : Eigenvalues of non-symmetric arrays.
     scipy.linalg.eigh : Similar function in SciPy (but also solves the
                         generalized eigenvalue problem).
 
@@ -1447,7 +1447,7 @@ def eigh(a, UPLO='L'):
     The eigenvalues of real symmetric or complex Hermitian matrices are
     always real. [1]_ The array `v` of (column) eigenvectors is unitary
     and `a`, `w`, and `v` satisfy the equations
-    ``dot(a, v[:, i]) = w[i] * v[:, i]``.
+    ``a @ v[:, i] = w[i] * v[:, i]``.
 
     References
     ----------
@@ -1467,9 +1467,9 @@ def eigh(a, UPLO='L'):
     array([[-0.92387953+0.j        , -0.38268343+0.j        ], # may vary
            [ 0.        +0.38268343j,  0.        -0.92387953j]])
 
-    >>> np.dot(a, v[:, 0]) - w[0] * v[:, 0] # verify 1st e-val/vec pair
+    >>> np.dot(a, v[:, 0]) - w[0] * v[:, 0] # verify 1st eigenval/vec pair
     array([5.55111512e-17+0.0000000e+00j, 0.00000000e+00+1.2490009e-16j])
-    >>> np.dot(a, v[:, 1]) - w[1] * v[:, 1] # verify 2nd e-val/vec pair
+    >>> np.dot(a, v[:, 1]) - w[1] * v[:, 1] # verify 2nd eigenval/vec pair
     array([0.+0.j, 0.+0.j])
 
     >>> A = np.matrix(a) # what happens if input is a matrix object
