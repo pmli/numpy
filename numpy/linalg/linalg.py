@@ -1858,10 +1858,10 @@ def _matrix_rank_dispatcher(A, tol=None, hermitian=None):
 @array_function_dispatch(_matrix_rank_dispatcher)
 def matrix_rank(A, tol=None, hermitian=False):
     """
-    Return matrix rank of array using SVD method
+    Return matrix rank of array using SVD method.
 
-    Rank of the array is the number of singular values of the array that are
-    greater than `tol`.
+    Numerical rank of the array is the number of singular values of the array
+    that are greater than `tol`.
 
     .. versionchanged:: 1.14
        Can now operate on stacks of matrices
@@ -1893,29 +1893,29 @@ def matrix_rank(A, tol=None, hermitian=False):
     Notes
     -----
     The default threshold to detect rank deficiency is a test on the magnitude
-    of the singular values of `A`.  By default, we identify singular values less
-    than ``S.max() * max(M, N) * eps`` as indicating rank deficiency (with
-    the symbols defined above). This is the algorithm MATLAB uses [1].  It also
-    appears in *Numerical recipes* in the discussion of SVD solutions for linear
-    least squares [2].
+    of the singular values of `A`.  By default, we identify singular values
+    less than ``S.max() * max(M, N) * eps`` as indicating rank deficiency (with
+    the symbols defined above).  This is the algorithm MATLAB uses [1]_.  It
+    also appears in *Numerical recipes* in the discussion of SVD solutions for
+    linear least squares [2]_.
 
     This default threshold is designed to detect rank deficiency accounting for
-    the numerical errors of the SVD computation.  Imagine that there is a column
-    in `A` that is an exact (in floating point) linear combination of other
-    columns in `A`. Computing the SVD on `A` will not produce a singular value
-    exactly equal to 0 in general: any difference of the smallest SVD value from
-    0 will be caused by numerical imprecision in the calculation of the SVD.
-    Our threshold for small SVD values takes this numerical imprecision into
-    account, and the default threshold will detect such numerical rank
-    deficiency.  The threshold may declare a matrix `A` rank deficient even if
-    the linear combination of some columns of `A` is not exactly equal to
-    another column of `A` but only numerically very close to another column of
-    `A`.
+    the numerical errors of the SVD computation.  Imagine that there is a
+    column in `A` that is an exact (in floating point) linear combination of
+    other columns in `A`.  Computing the SVD on `A` will not produce a singular
+    value exactly equal to 0 in general: any difference of the smallest SVD
+    value from 0 will be caused by numerical imprecision in the calculation of
+    the SVD.  Our threshold for small SVD values takes this numerical
+    imprecision into account, and the default threshold will detect such
+    numerical rank deficiency.  The threshold may declare a matrix `A` rank
+    deficient even if the linear combination of some columns of `A` is not
+    exactly equal to another column of `A` but only numerically very close to
+    another column of `A`.
 
     We chose our default threshold because it is in wide use.  Other thresholds
     are possible.  For example, elsewhere in the 2007 edition of *Numerical
     recipes* there is an alternative threshold of ``S.max() *
-    np.finfo(A.dtype).eps / 2. * np.sqrt(m + n + 1.)``. The authors describe
+    np.finfo(A.dtype).eps / 2. * np.sqrt(m + n + 1.)``.  The authors describe
     this threshold as being based on "expected roundoff error" (p 71).
 
     The thresholds above deal with floating point roundoff error in the
