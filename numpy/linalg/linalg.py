@@ -1237,7 +1237,7 @@ def eig(a):
     ----------
     a : (..., M, M) array
         Matrices for which the eigenvalues and right eigenvectors will
-        be computed
+        be computed.
 
     Returns
     -------
@@ -1247,7 +1247,7 @@ def eig(a):
         array will be of complex type, unless the imaginary part is
         zero in which case it will be cast to a real type. When `a`
         is real the resulting eigenvalues will be real (0 imaginary
-        part) or occur in conjugate pairs
+        part) or occur in conjugate pairs.
 
     v : (..., M, M) array
         The normalized (unit "length") eigenvectors, such that the
@@ -1261,10 +1261,10 @@ def eig(a):
 
     See Also
     --------
-    eigvals : eigenvalues of a non-symmetric array.
-    eigh : eigenvalues and eigenvectors of a real symmetric or complex
+    eigvals : Eigenvalues of a non-symmetric array.
+    eigh : Eigenvalues and eigenvectors of a real symmetric or complex
            Hermitian (conjugate symmetric) array.
-    eigvalsh : eigenvalues of a real symmetric or complex Hermitian
+    eigvalsh : Eigenvalues of a real symmetric or complex Hermitian
                (conjugate symmetric) array.
     scipy.linalg.eig : Similar function in SciPy that also solves the
                        generalized eigenvalue problem.
@@ -1282,7 +1282,7 @@ def eig(a):
     This is implemented using the ``_geev`` LAPACK routines which compute
     the eigenvalues and eigenvectors of general square arrays.
 
-    The number `w` is an eigenvalue of `a` if there exists a vector
+    The number `w` is an eigenvalue of `a` if there exists a nonzero vector
     `v` such that ``a @ v = w * v``. Thus, the arrays `a`, `w`, and
     `v` satisfy the equations ``a @ v[:,i] = w[i] * v[:,i]``
     for :math:`i \\in \\{0,...,M-1\\}`.
@@ -1301,7 +1301,7 @@ def eig(a):
     rest is roundoff error.
 
     Finally, it is emphasized that `v` consists of the *right* (as in
-    right-hand side) eigenvectors of `a`.  A vector `y` satisfying
+    right-hand side) eigenvectors of `a`.  A nonzero vector `y` satisfying
     ``y.T @ a = z * y.T`` for some number `z` is called a *left*
     eigenvector of `a`, and, in general, the left and right eigenvectors
     of a matrix are not necessarily the (perhaps conjugate) transposes
@@ -1316,7 +1316,7 @@ def eig(a):
     --------
     >>> from numpy import linalg as LA
 
-    (Almost) trivial example with real e-values and e-vectors.
+    (Almost) trivial example with real eigenvalues and eigenvectors.
 
     >>> w, v = LA.eig(np.diag((1, 2, 3)))
     >>> w; v
@@ -1325,8 +1325,8 @@ def eig(a):
            [0., 1., 0.],
            [0., 0., 1.]])
 
-    Real matrix possessing complex e-values and e-vectors; note that the
-    e-values are complex conjugates of each other.
+    Real matrix possessing complex eigenvalues and eigenvectors; note that the
+    eigenvalues are complex conjugates of each other.
 
     >>> w, v = LA.eig(np.array([[1, -1], [1, 1]]))
     >>> w; v
@@ -1334,8 +1334,8 @@ def eig(a):
     array([[0.70710678+0.j        , 0.70710678-0.j        ],
            [0.        -0.70710678j, 0.        +0.70710678j]])
 
-    Complex-valued matrix with real e-values (but complex-valued e-vectors);
-    note that ``a.conj().T == a``, i.e., `a` is Hermitian.
+    Complex-valued matrix with real eigenvalues (but complex-valued
+    eigenvectors); note that ``a.conj().T == a``, i.e., `a` is Hermitian.
 
     >>> a = np.array([[1, 1j], [-1j, 1]])
     >>> w, v = LA.eig(a)
@@ -1347,10 +1347,10 @@ def eig(a):
     Be careful about round-off error!
 
     >>> a = np.array([[1 + 1e-9, 0], [0, 1 - 1e-9]])
-    >>> # Theor. e-values are 1 +/- 1e-9
+    >>> # Theor. eigenvalues are 1 +/- 1e-9
     >>> w, v = LA.eig(a)
-    >>> w; v
-    array([1., 1.])
+    >>> w - 1; v
+    array([ 1.00000008e-09, -9.99999972e-10])
     array([[1., 0.],
            [0., 1.]])
 
