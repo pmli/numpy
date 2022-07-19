@@ -1130,7 +1130,7 @@ def eigvalsh(a, UPLO='L'):
     """
     Compute the eigenvalues of a complex Hermitian or real symmetric matrix.
 
-    Main difference from eigh: the eigenvectors are not computed.
+    Main difference from `eigh`: the eigenvectors are not computed.
 
     Parameters
     ----------
@@ -1158,10 +1158,10 @@ def eigvalsh(a, UPLO='L'):
 
     See Also
     --------
-    eigh : eigenvalues and eigenvectors of real symmetric or complex Hermitian
+    eigh : Eigenvalues and eigenvectors of real symmetric or complex Hermitian
            (conjugate symmetric) arrays.
-    eigvals : eigenvalues of general real or complex arrays.
-    eig : eigenvalues and right eigenvectors of general real or complex
+    eigvals : Eigenvalues of general real or complex arrays.
+    eig : Eigenvalues and right eigenvectors of general real or complex
           arrays.
     scipy.linalg.eigvalsh : Similar function in SciPy.
 
