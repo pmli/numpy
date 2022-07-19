@@ -1566,19 +1566,19 @@ def svd(a, full_matrices=True, compute_uv=True, hermitian=False):
     Returns
     -------
     u : { (..., M, M), (..., M, K) } array
-        Unitary array(s). The first ``a.ndim - 2`` dimensions have the same
-        size as those of the input `a`. The size of the last two dimensions
-        depends on the value of `full_matrices`. Only returned when
-        `compute_uv` is True.
+        Matrice(s) with orthonormal columns. The first ``a.ndim - 2``
+        dimensions have the same size as those of the input `a`. The size of
+        the last two dimensions depends on the value of `full_matrices`. Only
+        returned when `compute_uv` is True.
     s : (..., K) array
         Vector(s) with the singular values, within each vector sorted in
         descending order. The first ``a.ndim - 2`` dimensions have the same
         size as those of the input `a`.
     vh : { (..., N, N), (..., K, N) } array
-        Unitary array(s). The first ``a.ndim - 2`` dimensions have the same
-        size as those of the input `a`. The size of the last two dimensions
-        depends on the value of `full_matrices`. Only returned when
-        `compute_uv` is True.
+        Matrice(s) with orthonormal columns. The first ``a.ndim - 2``
+        dimensions have the same size as those of the input `a`. The size of
+        the last two dimensions depends on the value of `full_matrices`. Only
+        returned when `compute_uv` is True.
 
     Raises
     ------
